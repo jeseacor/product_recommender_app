@@ -6,4 +6,3 @@ output/*.xlsx
 ~$*.xlsx
 .DS_Store
 Thumbs.db
-data/inventory/inventory.xlsx
