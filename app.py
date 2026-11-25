@@ -71,6 +71,7 @@ st.markdown(
             border-bottom: 4px solid var(--company-orange);
             padding-bottom: 0.55rem;
             margin-bottom: 0.4rem;
+            font-size: 1.5rem;
         }}
 
         h2, h3 {{
@@ -81,6 +82,9 @@ st.markdown(
         [data-testid="stHeadingWithActionElements"] h1,
         [data-testid="stHeadingWithActionElements"] h1 span {{
             color: var(--company-orange) !important;
+            font-size: 2rem !important;
+            border-bottom: none !important;
+            padding-top: 12px !important;            
         }}
 
         p, label, .stCaption {{
@@ -944,17 +948,27 @@ def show_product_search_assistant(
                     )
 
 
-st.title(APP_TITLE)
+##st.title(APP_TITLE)
+
+title_col, logo_col = st.columns([3, 2], vertical_alignment="center")
+
+with title_col:
+    st.title(APP_TITLE)
+
+with logo_col:
+    st.markdown("<div style='height: 12px;'></div>", unsafe_allow_html=True)
+    st.image("assets/logo.gif", width="stretch")
+
 st.caption(
     "Internal pilot — upload a customer enquiry, choose supplier scope, "
     "and download the recommended inventory matches."
 )
 
-st.warning(
-    "Pilot only: this page has no user authentication. Run it only on an "
-    "approved internal network and stop the server when testing is finished.",
-    icon="⚠️",
-)
+##st.warning(
+##    "Pilot only: this page has no user authentication. Run it only on an "
+##   "approved internal network and stop the server when testing is finished.",
+##    icon="⚠️",
+##)
 
 if not INVENTORY_FILE.exists():
     st.error(
