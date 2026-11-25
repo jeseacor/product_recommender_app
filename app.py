@@ -1006,8 +1006,6 @@ st.subheader("Customer enquiry")
 enq_col1, enq_col2 = st.columns([2, 2], vertical_alignment="center")
 
 with enq_col1:
-
-
     customer_template_bytes = generate_customer_enquiry_template()
 
     st.download_button(
