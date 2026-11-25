@@ -1068,27 +1068,31 @@ in_stock_only = st.checkbox(
     on_change=clear_previous_results,
 )
 
-top_n = st.selectbox(
-    "Maximum recommendations per enquiry",
-    options=[1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
-    index=2,
-    on_change=clear_previous_results,
-)
+max_rec_col, min_scor_col = st.columns([2, 3], vertical_alignment="center")
 
-min_description_score = st.slider(
-    "Minimum description match score",
-    min_value=10,
-    max_value=100,
-    value=int(MIN_DESCRIPTION_SCORE),
-    step=1,
-    help=(
-        "The final description score must be at least the value "
-        "selected here. Higher is stricter and lower returns more possible "
-        "matches. This is the only minimum used for description matching. "
-        "Fuzzy part-number matching has a separate threshold."
-    ),
-    on_change=clear_previous_results,
-)
+with max_rec_col:
+    top_n = st.selectbox(
+        "Maximum recommendations per enquiry",
+        options=[1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
+        index=2,
+        on_change=clear_previous_results,
+    )
+
+with min_scor_col:
+    min_description_score = st.slider(
+        "Minimum description match score",
+        min_value=10,
+        max_value=100,
+        value=int(MIN_DESCRIPTION_SCORE),
+        step=1,
+        help=(
+            "The final description score must be at least the value "
+            "selected here. Higher is stricter and lower returns more possible "
+            "matches. This is the only minimum used for description matching. "
+            "Fuzzy part-number matching has a separate threshold."
+        ),
+        on_change=clear_previous_results,
+    )
 
 run_disabled = (
     customer_file is None
