@@ -1003,32 +1003,40 @@ st.divider()
 
 st.subheader("Customer enquiry")
 
-customer_template_bytes = generate_customer_enquiry_template()
+enq_col1, enq_col2 = st.columns([2, 2], vertical_alignment="center")
 
-st.download_button(
-    "Generate and download customer enquiry template",
-    data=customer_template_bytes,
-    file_name="customer_enquiry_template.xlsx",
-    mime=(
-        "application/vnd.openxmlformats-officedocument."
-        "spreadsheetml.sheet"
-    ),
-    use_container_width=True,
-    help=(
-        "Generate a new Excel workbook containing the standard customer "
-        "enquiry columns and instructions."
-    ),
-)
+with enq_col1:
 
-customer_file = st.file_uploader(
-    "Customer enquiry workbook",
-    type=["xlsx"],
-    help=(
-        "The workbook must contain a Description column. PartNumber, "
-        "CustomerPrice, and PriceBasis are optional."
-    ),
-    on_change=clear_previous_results,
-)
+
+    customer_template_bytes = generate_customer_enquiry_template()
+
+    st.download_button(
+        "Generate and download customer enquiry template",
+        data=customer_template_bytes,
+        file_name="customer_enquiry_template.xlsx",
+        mime=(
+            "application/vnd.openxmlformats-officedocument."
+            "spreadsheetml.sheet"
+        ),
+        use_container_width=True,
+        help=(
+            "Generate a new Excel workbook containing the standard customer "
+            "enquiry columns and instructions."
+        ),
+    )
+
+with enq_col2:
+    customer_file = st.file_uploader(
+        "Customer enquiry workbook",
+        type=["xlsx"],
+        help=(
+            "The workbook must contain a Description column. PartNumber, "
+            "CustomerPrice, and PriceBasis are optional."
+        ),
+        on_change=clear_previous_results,
+    )
+
+st.divider()
 
 all_suppliers = st.checkbox(
     "Search all suppliers",
