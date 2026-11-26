@@ -154,6 +154,7 @@ st.markdown(
 
         [data-testid="stMetricValue"] {{
             color: var(--company-dark-gray);
+            font-size: 1.5rem;
         }}
 
         [data-testid="stMetricLabel"] {{
