@@ -1035,7 +1035,6 @@ with enq_col2:
         on_change=clear_previous_results,
     )
 
-st.divider()
 
 with st.expander("Search settings", expanded=False):
 
@@ -1083,9 +1082,6 @@ with st.expander("Search settings", expanded=False):
                 on_change=clear_previous_results,
             )
 
-    st.divider()
-
-
 
     max_rec_col, min_scor_col = st.columns([2, 3], vertical_alignment="center")
 
@@ -1112,8 +1108,6 @@ with st.expander("Search settings", expanded=False):
             ),
             on_change=clear_previous_results,
         )
-
-st.divider()
 
 
 run_disabled = (
