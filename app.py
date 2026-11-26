@@ -1037,77 +1037,81 @@ with enq_col2:
 
 st.divider()
 
-all_suppliers = st.checkbox(
-    "Search all suppliers",
-    value=True,
-    on_change=clear_previous_results,
-)
+with st.expander("Search settings", expanded=False):
 
-selected_suppliers: list[str] = []
-excluded_suppliers: list[str] = []
-
-if not all_suppliers:
-
-    sup_col1, sup_col2 = st.columns([2, 2], vertical_alignment="center")
-
-    with sup_col1:
-        selected_suppliers = st.multiselect(
-            "Preferred suppliers",
-            options=available_suppliers,
-            placeholder="Choose one or more suppliers",
-            help="Only products from these suppliers will be searched.",
-            on_change=clear_previous_results,
-        )
-
-    with sup_col2:
-        excluded_suppliers = st.multiselect(
-            "Suppliers to exclude",
-            options=available_suppliers,
-            placeholder="Optional — choose suppliers to remove",
-            help=(
-                "Products from these suppliers will be removed from the search. "
-                "Exclusion takes priority if a supplier is also selected as preferred."
-            ),
-            on_change=clear_previous_results,
-        )
-
-st.divider()
-
-in_stock_only = st.checkbox(
-    "Only recommend products currently in stock",
-    value=True,
-    help=(
-        "When selected, only inventory rows with OnHandQty greater than zero "
-        "are searched."
-    ),
-    on_change=clear_previous_results,
-)
-
-max_rec_col, min_scor_col = st.columns([2, 3], vertical_alignment="center")
-
-with max_rec_col:
-    top_n = st.selectbox(
-        "Maximum recommendations per enquiry",
-        options=[1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
-        index=2,
-        on_change=clear_previous_results,
-    )
-
-with min_scor_col:
-    min_description_score = st.slider(
-        "Minimum description match score",
-        min_value=10,
-        max_value=100,
-        value=int(MIN_DESCRIPTION_SCORE),
-        step=1,
+    in_stock_only = st.checkbox(
+        "Only recommend products currently in stock",
+        value=True,
         help=(
-            "The final description score must be at least the value "
-            "selected here. Higher is stricter and lower returns more possible "
-            "matches. This is the only minimum used for description matching. "
-            "Fuzzy part-number matching has a separate threshold."
+            "When selected, only inventory rows with OnHandQty greater than zero "
+            "are searched."
         ),
         on_change=clear_previous_results,
     )
+
+    all_suppliers = st.checkbox(
+        "Search all suppliers",
+        value=True,
+        on_change=clear_previous_results,
+    )
+
+    selected_suppliers: list[str] = []
+    excluded_suppliers: list[str] = []
+
+    if not all_suppliers:
+
+        sup_col1, sup_col2 = st.columns([2, 2], vertical_alignment="center")
+
+        with sup_col1:
+            selected_suppliers = st.multiselect(
+                "Preferred suppliers",
+                options=available_suppliers,
+                placeholder="Choose one or more suppliers",
+                help="Only products from these suppliers will be searched.",
+                on_change=clear_previous_results,
+            )
+
+        with sup_col2:
+            excluded_suppliers = st.multiselect(
+                "Suppliers to exclude",
+                options=available_suppliers,
+                placeholder="Optional — choose suppliers to remove",
+                help=(
+                    "Products from these suppliers will be removed from the search. "
+                    "Exclusion takes priority if a supplier is also selected as preferred."
+                ),
+                on_change=clear_previous_results,
+            )
+
+    st.divider()
+
+
+
+    max_rec_col, min_scor_col = st.columns([2, 3], vertical_alignment="center")
+
+    with max_rec_col:
+        top_n = st.selectbox(
+            "Maximum recommendations per product",
+            options=[1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
+            index=2,
+            on_change=clear_previous_results,
+        )
+
+    with min_scor_col:
+        min_description_score = st.slider(
+            "Minimum description match score",
+            min_value=10,
+            max_value=100,
+            value=int(MIN_DESCRIPTION_SCORE),
+            step=1,
+            help=(
+                "The final description score must be at least the value "
+                "selected here. Higher is stricter and lower returns more possible "
+                "matches. This is the only minimum used for description matching. "
+                "Fuzzy part-number matching has a separate threshold."
+            ),
+            on_change=clear_previous_results,
+        )
 
 st.divider()
 
@@ -1146,6 +1150,9 @@ current_search_settings = RecommendationSettings(
         min_description_score
     ),
 )
+
+
+
 
 generate_column, chat_column = st.columns([2, 1])
 
