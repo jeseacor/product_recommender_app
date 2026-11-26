@@ -1043,30 +1043,38 @@ all_suppliers = st.checkbox(
 )
 
 selected_suppliers: list[str] = []
+excluded_suppliers: list[str] = []
 
 if not all_suppliers:
-    selected_suppliers = st.multiselect(
-        "Preferred suppliers",
-        options=available_suppliers,
-        placeholder="Choose one or more suppliers",
-        help="Only products from these suppliers will be searched.",
-        on_change=clear_previous_results,
-    )
 
-excluded_suppliers = st.multiselect(
-    "Suppliers to exclude",
-    options=available_suppliers,
-    placeholder="Optional — choose suppliers to remove",
-    help=(
-        "Products from these suppliers will be removed from the search. "
-        "Exclusion takes priority if a supplier is also selected as preferred."
-    ),
-    on_change=clear_previous_results,
-)
+    sup_col1, sup_col2 = st.columns([2, 2], vertical_alignment="center")
+
+    with sup_col1:
+        selected_suppliers = st.multiselect(
+            "Preferred suppliers",
+            options=available_suppliers,
+            placeholder="Choose one or more suppliers",
+            help="Only products from these suppliers will be searched.",
+            on_change=clear_previous_results,
+        )
+
+    with sup_col2:
+        excluded_suppliers = st.multiselect(
+            "Suppliers to exclude",
+            options=available_suppliers,
+            placeholder="Optional — choose suppliers to remove",
+            help=(
+                "Products from these suppliers will be removed from the search. "
+                "Exclusion takes priority if a supplier is also selected as preferred."
+            ),
+            on_change=clear_previous_results,
+        )
+
+st.divider()
 
 in_stock_only = st.checkbox(
     "Only recommend products currently in stock",
-    value=False,
+    value=True,
     help=(
         "When selected, only inventory rows with OnHandQty greater than zero "
         "are searched."
@@ -1099,6 +1107,9 @@ with min_scor_col:
         ),
         on_change=clear_previous_results,
     )
+
+st.divider()
+
 
 run_disabled = (
     customer_file is None

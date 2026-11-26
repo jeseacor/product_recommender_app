@@ -18,7 +18,7 @@ TOP_N = 3
 
 # Less strict than the earlier word-pair version, while still filtering out
 # weak description matches.
-MIN_DESCRIPTION_SCORE = 30
+MIN_DESCRIPTION_SCORE = 50
 MIN_PART_SCORE = 90
 
 # The original fuzzy score remains the main description signal.
